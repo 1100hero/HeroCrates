@@ -1,0 +1,75 @@
+messages:
+  only_players: "&cSolo i giocatori possono eseguire questo comando."
+  no_permission: "&cNon hai il permesso per eseguire questo comando."
+  player_not_found: "&cGiocatore non trovato, non è stato possibile dare la Cassa."
+  invalid_crate_type: "&cTipo di Cassa non valido."
+  inventory_full_self: "&cIl tuo inventario è pieno."
+  inventory_full_other: "&cL'inventario di {player} è pieno."
+  received_crate: "&eHai ricevuto la cassa &b{crate}&e!"
+  given_crate: "&eHai dato una cassa di tipo &b{crate} &ea &b{player}&e!"
+crates:
+  normal:
+    display_name: "Cassa normale"
+    item_name: "Cassa normale"
+    item_lore:
+      - "Piazza la cassa per renderla operativa!"
+    hologram: "§6Cassa Leggendaria"
+    rewards:
+      - type: "ITEM"
+        item: "DIAMOND_BLOCK"
+        amount: 5
+        probability: 50
+      - type: "COMMAND"
+        command: "give %player% diamond_sword"
+        probability: 50
+    guaranteed_rewards:
+      30:
+        - type: "ITEM"
+          item: "DIAMOND_BLOCK"
+          amount: 10
+    animations:
+      type: "SPIRAL"
+      color: "RED"
+      size: 2.0
+  rare:
+    display_name: "Cassa Leggendaria"
+    item_name: "Cassa normale"
+    hologram: "§6Cassa Leggendaria"
+    rewards:
+      - type: "ITEM"
+        item: "DIAMOND_BLOCK"
+        amount: 5
+        probability: 50
+      - type: "COMMAND"
+        command: "give %player% diamond_sword"
+        probability: 50
+    guaranteed_rewards:
+      30:
+        - type: "ITEM"
+          item: "DIAMOND_BLOCK"
+          amount: 10
+    animations:
+      type: "SPIRAL"
+      color: "RED"
+      size: 2.0
+  epic:
+    display_name: "Cassa Leggendaria"
+    item_name: "Cassa normale"
+    hologram: "§6Cassa Leggendaria"
+    rewards:
+      - type: "ITEM"
+        item: "DIAMOND_BLOCK"
+        amount: 5
+        probability: 50
+      - type: "COMMAND"
+        command: "give %player% diamond_sword"
+        probability: 50
+    guaranteed_rewards:
+      30:
+        - type: "ITEM"
+          item: "DIAMOND_BLOCK"
+          amount: 10
+    animations:
+      type: "SPIRAL"
+      color: "RED"
+      size: 2.0
