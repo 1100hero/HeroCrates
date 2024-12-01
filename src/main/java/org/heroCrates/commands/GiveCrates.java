@@ -6,7 +6,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.util.StringUtil;
 import org.heroCrates.HeroCrates;
-import org.heroCrates.items.CrateItem;
+import org.heroCrates.items.impl.CrateItem;
 import org.heroCrates.utils.Utils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

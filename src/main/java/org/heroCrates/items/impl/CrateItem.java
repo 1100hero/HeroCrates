@@ -1,4 +1,4 @@
-package org.heroCrates.items;
+package org.heroCrates.items.impl;
 
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 import org.heroCrates.HeroCrates;
+import org.heroCrates.items.AbstractItem;
 import org.heroCrates.utils.Utils;
 
 import java.util.stream.Collectors;

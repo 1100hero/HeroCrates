@@ -1,13 +1,13 @@
-package org.heroCrates.crates;
+package org.heroCrates.managers;
 
 import lombok.Getter;
-import net.kyori.adventure.text.Component;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
+import org.heroCrates.dto.Crate;
 import org.heroCrates.items.AbstractItem;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 public class CratesManager {

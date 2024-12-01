@@ -9,7 +9,7 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 import org.heroCrates.HeroCrates;
-import org.heroCrates.crates.Crate;
+import org.heroCrates.dto.Crate;
 import org.heroCrates.items.AbstractItem;
 
 public class CrateListener implements Listener {

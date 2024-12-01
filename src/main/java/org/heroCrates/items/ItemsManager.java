@@ -3,6 +3,7 @@ package org.heroCrates.items;
 import org.bukkit.Material;
 import org.heroCrates.HeroCrates;
 import org.heroCrates.enums.ItemsType;
+import org.heroCrates.items.impl.CrateItem;
 
 import java.util.EnumMap;
 import java.util.Map;

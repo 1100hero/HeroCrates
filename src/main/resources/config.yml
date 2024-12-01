@@ -9,52 +9,14 @@ messages:
   given_crate: "&eHai dato una cassa di tipo &b{crate} &ea &b{player}&e!"
 crates:
   normal:
+    key:
+        name: "Chiave normale"
+        lore:
+            - "Usa questa chiave per aprire la cassa!"
     display_name: "Cassa normale"
     item_name: "Cassa normale"
     item_lore:
       - "Piazza la cassa per renderla operativa!"
-    hologram: "§6Cassa Leggendaria"
-    rewards:
-      - type: "ITEM"
-        item: "DIAMOND_BLOCK"
-        amount: 5
-        probability: 50
-      - type: "COMMAND"
-        command: "give %player% diamond_sword"
-        probability: 50
-    guaranteed_rewards:
-      30:
-        - type: "ITEM"
-          item: "DIAMOND_BLOCK"
-          amount: 10
-    animations:
-      type: "SPIRAL"
-      color: "RED"
-      size: 2.0
-  rare:
-    display_name: "Cassa Leggendaria"
-    item_name: "Cassa normale"
-    hologram: "§6Cassa Leggendaria"
-    rewards:
-      - type: "ITEM"
-        item: "DIAMOND_BLOCK"
-        amount: 5
-        probability: 50
-      - type: "COMMAND"
-        command: "give %player% diamond_sword"
-        probability: 50
-    guaranteed_rewards:
-      30:
-        - type: "ITEM"
-          item: "DIAMOND_BLOCK"
-          amount: 10
-    animations:
-      type: "SPIRAL"
-      color: "RED"
-      size: 2.0
-  epic:
-    display_name: "Cassa Leggendaria"
-    item_name: "Cassa normale"
     hologram: "§6Cassa Leggendaria"
     rewards:
       - type: "ITEM"

@@ -4,7 +4,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.heroCrates.HeroCrates;
 import org.heroCrates.commands.GiveCrates;
-import org.heroCrates.crates.Crate;
+import org.heroCrates.dto.Crate;
 import org.heroCrates.listeners.CrateListener;
 import org.heroCrates.listeners.ItemListener;
 

@@ -1,10 +1,10 @@
-package org.heroCrates.crates;
+package org.heroCrates.dto;
 
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Location;
 import org.heroCrates.HeroCrates;
-import org.heroCrates.items.CrateItem;
+import org.heroCrates.items.impl.CrateItem;
 
 @Getter
 public class Crate {
