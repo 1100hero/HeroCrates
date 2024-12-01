@@ -1,11 +1,13 @@
 package org.heroCrates.items.impl;
 
+import lombok.Getter;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 import org.heroCrates.HeroCrates;
+import org.heroCrates.dto.Crate;
 import org.heroCrates.items.AbstractItem;
 import org.heroCrates.utils.Utils;
 
@@ -16,34 +18,34 @@ public class CrateItem extends AbstractItem {
     private final FileConfiguration config;
     private final HeroCrates plugin;
     private final ItemStack item;
-    private final String crateType;
+    @Getter private final Crate crate;
 
-    public CrateItem(HeroCrates plugin, String crateType) {
+    public CrateItem(HeroCrates plugin, Crate crate) {
         this.item = new ItemStack(Material.CHEST);
         this.config = plugin.getConfig();
         this.plugin = plugin;
-        this.crateType = crateType;
+        this.crate = crate;
 
         item.editMeta(meta -> {
-            String itemName = config.getString("crates." + crateType.toLowerCase() + ".item_name");
+            String itemName = config.getString("crates." + getCrate().type().toLowerCase() + ".item_name");
             if (itemName != null) {
                 meta.displayName(Utils.colorize(itemName));
 
                 meta.lore(
-                        config.getStringList("crates." + crateType.toLowerCase() + ".item_lore")
+                        config.getStringList("crates." + getCrate().type().toLowerCase() + ".item_lore")
                                 .stream()
                                 .map(Utils::colorize)
                                 .collect(Collectors.toList())
                 );
             }
 
-            meta.getPersistentDataContainer().set(AbstractItem.ITEM_KEY, PersistentDataType.STRING, crateType);
+            meta.getPersistentDataContainer().set(AbstractItem.ITEM_KEY, PersistentDataType.STRING, getCrate().type());
         });
     }
 
     @Override
     public String getName() {
-        return plugin.getCratesManager().getDisplayName(crateType);
+        return plugin.getCratesManager().getDisplayName(getCrate().type());
     }
 
     @Override

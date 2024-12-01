@@ -6,6 +6,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.util.StringUtil;
 import org.heroCrates.HeroCrates;
+import org.heroCrates.dto.Crate;
 import org.heroCrates.items.impl.CrateItem;
 import org.heroCrates.utils.Utils;
 import org.jetbrains.annotations.NotNull;
@@ -67,7 +68,11 @@ public class GiveCrates implements CommandExecutor, TabExecutor {
             target.sendMessage(Utils.colorize(config.getString("messages.received_crate").replace("{crate}", plugin.getCratesManager().getDisplayName(args[1]))));
         }
 
-        target.getInventory().addItem(new CrateItem(plugin, args[1]).getItem());
+        target.getInventory().addItem(
+                new CrateItem(plugin,
+                        new Crate(null,
+                                args[1],
+                                config.getString("crates." + args[1]))).getItem());
         return true;
     }
 

@@ -2,6 +2,7 @@ package org.heroCrates.items;
 
 import org.bukkit.Material;
 import org.heroCrates.HeroCrates;
+import org.heroCrates.dto.Crate;
 import org.heroCrates.enums.ItemsType;
 import org.heroCrates.items.impl.CrateItem;
 
@@ -26,6 +27,6 @@ public class ItemsManager {
     }
 
     private void initializeItems() {
-        items.put(ItemsType.CRATE, new CrateItem(plugin, "DEFAULT"));
+        items.put(ItemsType.CRATE, new CrateItem(plugin, new Crate(null, "DEFAULT", "Default Crate")));
     }
 }

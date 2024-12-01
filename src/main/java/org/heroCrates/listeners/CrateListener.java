@@ -7,10 +7,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.persistence.PersistentDataType;
 import org.heroCrates.HeroCrates;
-import org.heroCrates.dto.Crate;
-import org.heroCrates.items.AbstractItem;
 
 public class CrateListener implements Listener {
 
@@ -41,12 +38,13 @@ public class CrateListener implements Listener {
             }
         }
 
+        /*
         plugin.getCratesManager().getCrates().add(
                 new Crate(plugin,
                         event.getBlock().getLocation(),
                         item.getItemMeta().getPersistentDataContainer().get(AbstractItem.ITEM_KEY, PersistentDataType.STRING),
                         plugin.getCratesManager().getDisplayName(item.getItemMeta().getPersistentDataContainer().get(AbstractItem.ITEM_KEY,
                                 PersistentDataType.STRING))));
-
+         */
     }
 }
