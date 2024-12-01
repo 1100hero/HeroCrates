@@ -1,0 +1,4 @@
+name: HeroCrates
+version: '1.0-SNAPSHOT'
+main: org.heroCrates.HeroCrates
+api-version: '1.21'
