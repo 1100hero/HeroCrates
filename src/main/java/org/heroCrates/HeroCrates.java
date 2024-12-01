@@ -7,7 +7,7 @@ public final class HeroCrates extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        
+
     }
 
     @Override
