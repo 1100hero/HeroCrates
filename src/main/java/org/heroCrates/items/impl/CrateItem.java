@@ -1,6 +1,7 @@
 package org.heroCrates.items.impl;
 
 import lombok.Getter;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -44,7 +45,7 @@ public class CrateItem extends AbstractItem {
     }
 
     @Override
-    public String getName() {
+    public Component getName() {
         return plugin.getCratesManager().getDisplayName(getCrate().type());
     }
 

@@ -5,6 +5,7 @@ import org.heroCrates.HeroCrates;
 import org.heroCrates.dto.Crate;
 import org.heroCrates.enums.ItemsType;
 import org.heroCrates.items.impl.CrateItem;
+import org.heroCrates.utils.Utils;
 
 import java.util.EnumMap;
 import java.util.Map;
@@ -27,6 +28,6 @@ public class ItemsManager {
     }
 
     private void initializeItems() {
-        items.put(ItemsType.CRATE, new CrateItem(plugin, new Crate(null, "DEFAULT", "Default Crate")));
+        items.put(ItemsType.CRATE, new CrateItem(plugin, new Crate(null, "DEFAULT", Utils.colorize("Default Crate"))));
     }
 }

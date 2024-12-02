@@ -1,6 +1,8 @@
 package org.heroCrates.listeners;
 
 import org.bukkit.Bukkit;
+import org.bukkit.block.BlockState;
+import org.bukkit.block.Chest;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -11,7 +13,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 import org.heroCrates.HeroCrates;
 import org.heroCrates.items.AbstractItem;
-import org.heroCrates.utils.Utils;
+import org.heroCrates.items.impl.CrateItem;
 
 public class ItemListener implements Listener {
 
@@ -30,23 +32,22 @@ public class ItemListener implements Listener {
         }
     }
 
-    public void onChestRightClick(PlayerInteractEvent event) {
+    public void onChestClick(PlayerInteractEvent event) {
         Player player = event.getPlayer();
-        if (event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
-        if (!isAnAbstractItem(event.getItem())) {
-            player.sendMessage(Utils.colorize("&cDevi avere una chiave in mano per aprire questa cassa."));
-            return;
+        if (event.getAction() != Action.RIGHT_CLICK_BLOCK
+                || event.getAction() != Action.LEFT_CLICK_BLOCK) return;
+        BlockState state = event.getClickedBlock().getState();
+        if (!(state instanceof Chest chest)) return;
+        if (!chest.getPersistentDataContainer().has(CrateItem.ITEM_KEY, PersistentDataType.STRING)) return;
+
+        if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
+            
+        } else {
+
+            event.setCancelled(true);
         }
-        if (!plugin.getCratesManager().isCrate(event.getClickedBlock().getLocation())) return;
-        // TODO: APRI CRATE
     }
 
-    public void onChestLeftClick(PlayerInteractEvent event) {
-        Player player = event.getPlayer();
-        if (event.getAction() != Action.LEFT_CLICK_BLOCK) return;
-        if (!plugin.getCratesManager().isCrate(event.getClickedBlock().getLocation())) return;
-        // TODO: APRI PREVIEW CRATE
-    }
 
     private boolean isAnAbstractItem(ItemStack item) {
         return item.hasItemMeta()

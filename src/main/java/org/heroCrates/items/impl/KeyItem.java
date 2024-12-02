@@ -1,5 +1,6 @@
 package org.heroCrates.items.impl;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.heroCrates.HeroCrates;
@@ -17,7 +18,7 @@ public class KeyItem extends AbstractItem {
     }
 
     @Override
-    protected String getName() {
+    protected Component getName() {
         return null;
     }
 

@@ -30,13 +30,13 @@ public class Initializer {
                 plugin.getCratesManager().getCrates().add(
                         new CrateItem(
                                 plugin,
-                                new Crate(null, key.toUpperCase(), displayName)));
+                                new Crate(null, key.toUpperCase(), Utils.colorize(displayName))));
             }
         } else {
             plugin.getCratesManager().getCrates().add(
                     new CrateItem(
                             plugin,
-                            new Crate(null, "DEFAULT", "Default Crate")));
+                            new Crate(null, "DEFAULT", Utils.colorize("Default Crate"))));
         }
         plugin.saveDefaultConfig();
     }

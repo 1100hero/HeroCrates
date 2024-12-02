@@ -1,5 +1,6 @@
 package org.heroCrates.commands;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.command.*;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -62,17 +63,16 @@ public class GiveCrates implements CommandExecutor, TabExecutor {
         }
 
         if (player == target) {
-            player.sendMessage(Utils.colorize(config.getString("messages.received_crate").replace("{crate}", plugin.getCratesManager().getDisplayName(args[1]))));
+            player.sendMessage(Utils.colorize(config.getString("messages.received_crate").replace("{crate}", Utils.decolorize(plugin.getCratesManager().getDisplayName(args[1])))));
         } else {
-            player.sendMessage(Utils.colorize(config.getString("messages.given_crate").replace("{crate}", plugin.getCratesManager().getDisplayName(args[1])).replace("{player}", target.getName())));
-            target.sendMessage(Utils.colorize(config.getString("messages.received_crate").replace("{crate}", plugin.getCratesManager().getDisplayName(args[1]))));
+            player.sendMessage(Utils.colorize(config.getString("messages.given_crate").replace("{crate}", Utils.decolorize(plugin.getCratesManager().getDisplayName(args[1])).replace("{player}", target.getName()))));
+            target.sendMessage(Utils.colorize(config.getString("messages.received_crate").replace("{crate}", Utils.decolorize(plugin.getCratesManager().getDisplayName(args[1])))));
         }
 
+        Component displayName = Utils.colorize(plugin.getConfig().getString("crates." + args[1].toLowerCase() + ".display_name"));
         target.getInventory().addItem(
                 new CrateItem(plugin,
-                        new Crate(null,
-                                args[1],
-                                config.getString("crates." + args[1]))).getItem());
+                        new Crate(null, args[1], displayName)).getItem());
         return true;
     }
 

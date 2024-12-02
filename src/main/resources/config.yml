@@ -1,3 +1,9 @@
+database:
+  host: "localhost"
+  port: 3306
+  database: "herocrates"
+  username: "root"
+  password: ""
 messages:
   only_players: "&cSolo i giocatori possono eseguire questo comando."
   no_permission: "&cNon hai il permesso per eseguire questo comando."
@@ -17,7 +23,9 @@ crates:
     item_name: "Cassa normale"
     item_lore:
       - "Piazza la cassa per renderla operativa!"
-    hologram: "§6Cassa Leggendaria"
+    hologram:
+      - "&6Cassa Leggendaria"
+      - "&7Clicca per aprire"
     rewards:
       - type: "ITEM"
         item: "DIAMOND_BLOCK"

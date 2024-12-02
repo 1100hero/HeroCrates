@@ -1,6 +1,7 @@
 package org.heroCrates.managers;
 
 import lombok.Getter;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
@@ -32,7 +33,7 @@ public class CratesManager {
                 .toList();
     }
 
-    public String getDisplayName(String type) {
+    public Component getDisplayName(String type) {
         return crates
                 .stream()
                 .filter(crateItem -> crateItem.getCrate().type().equalsIgnoreCase(type))

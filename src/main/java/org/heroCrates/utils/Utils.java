@@ -9,4 +9,8 @@ public class Utils {
         return LegacyComponentSerializer.legacyAmpersand().deserialize(message)
                 .decoration(TextDecoration.ITALIC, false);
     }
+
+    public static String decolorize(Component component) {
+        return LegacyComponentSerializer.legacyAmpersand().serialize(component);
+    }
 }
