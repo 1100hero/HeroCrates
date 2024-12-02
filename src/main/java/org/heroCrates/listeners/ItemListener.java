@@ -75,13 +75,15 @@ public class ItemListener implements Listener {
             }
 
             String animationType = config.getString("crates." + crateType.toLowerCase() + ".animation.type");
-            double size = config.getDouble("crates." + crateType.toLowerCase() + ".animation.size");
+            double size = config.getDouble("crates." + crateType.toLowerCase() + ".animation.distance");
+            String particle = config.getString("crates." + crateType.toLowerCase() + ".animation.particle");
 
             new Animation(plugin).playAnimation(
                     player,
                     chest.getLocation().add(0.5, 0.5, 0.5),
                     animationType,
-                    size);
+                    size,
+                    particle);
 
             plugin.getCratesManager().giveAward(player, crateType.toLowerCase());
         }

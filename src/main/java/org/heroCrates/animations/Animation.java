@@ -1,5 +1,6 @@
 package org.heroCrates.animations;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.Player;
@@ -14,34 +15,39 @@ public class Animation {
         this.plugin = plugin;
     }
 
-    public void playAnimation(Player player, Location location, String type, double size) {
+    public void playAnimation(Player player, Location location, String type, double size, String particle) {
         switch (type.toUpperCase()) {
             case "SPIRAL":
-                playSpiralAnimation(player, location, size);
+                playSpiralAnimation(player, location, size, particle);
                 break;
         }
     }
 
-    private void playSpiralAnimation(Player player, Location location, double size) {
-    new BukkitRunnable() {
-        double t = 0;
+    private void playSpiralAnimation(Player player, Location location, double size, String particle) {
+        new BukkitRunnable() {
+            double t = 0;
 
-        @Override
-        public void run() {
-            t += Math.PI / 16;
-            double y = t * 0.5;
+            @Override
+            public void run() {
+                t += Math.PI / 16;
+                double y = t * 0.5;
 
-            spawnSpiralParticles(player, location, size, t, y, true);
-            spawnSpiralParticles(player, location, size, t, y, false);
+                spawnSpiralParticles(player, location, size, t, y, true, particle);
+                spawnSpiralParticles(player, location, size, t, y, false, particle);
 
-            if (t > Math.PI * 4) {
-                this.cancel();
+                if (t > 10) {
+                    this.cancel();
+                }
             }
-        }
-    }.runTaskTimer(plugin, 0, 1);
-}
+        }.runTaskTimer(plugin, 0, 1);
+    }
 
-    private void spawnSpiralParticles(Player player, Location location, double size, double t, double y, boolean firstSpiral) {
+    private void spawnSpiralParticles(Player player, Location location, double size, double t, double y, boolean firstSpiral, String particle) {
+        if (particle == null || particle.isEmpty()) return;
+
+        Particle particleEnum = Particle.valueOf(particle.toUpperCase());
+
+
         double x = firstSpiral ? size * Math.cos(t) : size * Math.sin(t);
         double z = firstSpiral ? size * Math.sin(t) : size * Math.cos(t);
 
@@ -50,7 +56,7 @@ public class Animation {
             double offsetX = (Math.random() - 0.5) * 0.2;
             double offsetY = (Math.random() - 0.5) * 0.2;
             double offsetZ = (Math.random() - 0.5) * 0.2;
-            player.spawnParticle(Particle.DRIPPING_HONEY, location.clone().add(offsetX, offsetY, offsetZ), 1);
+            player.spawnParticle(particleEnum, location.clone().add(offsetX, offsetY, offsetZ), 1);
         }
         location.subtract(x, y, z);
     }

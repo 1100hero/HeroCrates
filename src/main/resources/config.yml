@@ -75,4 +75,5 @@ crates:
           amount: 10
     animation:
       type: "SPIRAL"
-      size: 2
+      particle: "DRIPPING_HONEY"
+      distance: 2
