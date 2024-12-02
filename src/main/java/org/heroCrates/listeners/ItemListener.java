@@ -41,7 +41,7 @@ public class ItemListener implements Listener {
         if (!chest.getPersistentDataContainer().has(CrateItem.ITEM_KEY, PersistentDataType.STRING)) return;
 
         if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
-            
+
         } else {
 
             event.setCancelled(true);

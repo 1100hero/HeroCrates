@@ -7,8 +7,8 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.util.StringUtil;
 import org.heroCrates.HeroCrates;
-import org.heroCrates.dto.Crate;
-import org.heroCrates.items.impl.CrateItem;
+import org.heroCrates.dto.Key;
+import org.heroCrates.items.impl.KeyItem;
 import org.heroCrates.utils.Utils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -17,18 +17,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class GiveCrates implements CommandExecutor, TabExecutor {
+public class GiveKeyCommand implements CommandExecutor, TabExecutor {
+
     private final FileConfiguration config;
     private final HeroCrates plugin;
 
-    public GiveCrates(HeroCrates plugin) {
-        PluginCommand command = plugin.getCommand("givecrate");
+    public GiveKeyCommand(HeroCrates plugin) {
+        PluginCommand command = plugin.getCommand("givekey");
         Objects.requireNonNull(command).setTabCompleter(this);
         command.setExecutor(this);
         this.plugin = plugin;
         this.config = plugin.getConfig();
     }
-
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -49,7 +49,7 @@ public class GiveCrates implements CommandExecutor, TabExecutor {
         }
 
         if (!plugin.getCratesManager().isCrateName(args[1])) {
-            player.sendMessage(Utils.colorize(config.getString("messages.invalid_crate_type")));
+            player.sendMessage(Utils.colorize(config.getString("messages.invalid_key_type")));
             return true;
         }
 
@@ -63,16 +63,28 @@ public class GiveCrates implements CommandExecutor, TabExecutor {
         }
 
         if (player == target) {
-            player.sendMessage(Utils.colorize(config.getString("messages.received_crate").replace("{crate}", Utils.decolorize(plugin.getCratesManager().getDisplayName(args[1])))));
+            player.sendMessage(Utils.colorize(config.getString("messages.received_key").replace("{key}", Utils.decolorize(plugin.getCratesManager().getDisplayName(args[1])))));
         } else {
-            player.sendMessage(Utils.colorize(config.getString("messages.given_crate").replace("{crate}", Utils.decolorize(plugin.getCratesManager().getDisplayName(args[1])).replace("{player}", target.getName()))));
-            target.sendMessage(Utils.colorize(config.getString("messages.received_crate").replace("{crate}", Utils.decolorize(plugin.getCratesManager().getDisplayName(args[1])))));
+            player.sendMessage(Utils.colorize(config.getString("messages.given_key").replace("{key}", Utils.decolorize(plugin.getCratesManager().getDisplayName(args[1])).replace("{player}", target.getName()))));
+            target.sendMessage(Utils.colorize(config.getString("messages.received_key").replace("{key}", Utils.decolorize(plugin.getCratesManager().getDisplayName(args[1])))));
         }
 
-        Component displayName = Utils.colorize(plugin.getConfig().getString("crates." + args[1].toLowerCase() + ".display_name"));
-        target.getInventory().addItem(
-                new CrateItem(plugin,
-                        new Crate(null, args[1], displayName)).getItem());
+        int amount = 1;
+        if (args.length >= 3) {
+            try {
+                amount = Integer.parseInt(args[2]);
+            } catch (NumberFormatException e) {
+                player.sendMessage(Utils.colorize(config.getString("messages.invalid_amount")));
+                return true;
+            }
+            if (amount >= 64) {
+                player.sendMessage(Utils.colorize(config.getString("messages.invalid_amount")));
+                return true;
+            }
+        }
+
+        Component displayName = Utils.colorize(plugin.getConfig().getString("crates." + args[1].toLowerCase() + ".key.display_name"));
+        new KeyItem(plugin, new Key(args[1], displayName)).giveItem(target, amount);
         return true;
     }
 
@@ -85,6 +97,10 @@ public class GiveCrates implements CommandExecutor, TabExecutor {
             completions.addAll(player.getServer().getOnlinePlayers().stream().map(Player::getName).toList());
         } else if (args.length == 2) {
             completions.addAll(plugin.getCratesManager().getCrateList());
+        } else if (args.length == 3) {
+            for (int i = 1; i <= 64; i++) {
+                completions.add(String.valueOf(i));
+            }
         }
         return StringUtil.copyPartialMatches(args[args.length - 1], completions, new ArrayList<>());
     }

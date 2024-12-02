@@ -3,7 +3,8 @@ package org.heroCrates.utils;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.heroCrates.HeroCrates;
-import org.heroCrates.commands.GiveCrates;
+import org.heroCrates.commands.GiveCratesCommand;
+import org.heroCrates.commands.GiveKeyCommand;
 import org.heroCrates.dto.Crate;
 import org.heroCrates.items.impl.CrateItem;
 import org.heroCrates.listeners.CrateListener;
@@ -18,15 +19,17 @@ public class Initializer {
     }
 
     public void initializeCommands() {
-        new GiveCrates(plugin);
+        new GiveCratesCommand(plugin);
+        new GiveKeyCommand(plugin);
     }
 
     public void initializeConfig() {
         FileConfiguration config = plugin.getConfig();
-        ConfigurationSection section = config.getConfigurationSection("crates");
-        if (section != null) {
-            for (String key : section.getKeys(false)) {
-                String displayName = section.getString(key + ".display_name");
+
+        ConfigurationSection cratesSection = config.getConfigurationSection("crates");
+        if (cratesSection != null) {
+            for (String key : cratesSection.getKeys(false)) {
+                String displayName = cratesSection.getString(key + ".display_name");
                 plugin.getCratesManager().getCrates().add(
                         new CrateItem(
                                 plugin,
@@ -38,6 +41,9 @@ public class Initializer {
                             plugin,
                             new Crate(null, "DEFAULT", Utils.colorize("Default Crate"))));
         }
+
+
+
         plugin.saveDefaultConfig();
     }
 

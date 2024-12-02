@@ -5,6 +5,10 @@ api-version: '1.21'
 author: 1100hero
 commands:
   givecrate:
-    description: 'Dai una cassa ad un giocatore'
-    usage: '/givecrate <nome> <tipo>'
+    description: 'Dai delle casse ad un giocatore'
+    usage: '/givecrate <nome> <tipo> <quantità>'
     permission: herocrates.givecrate
+  givekey:
+    description: 'Dai delle chiavi ad un giocatore'
+    usage: '/givekey <nome> <tipo> <quantità>'
+    permission: herocrates.givekey

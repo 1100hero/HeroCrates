@@ -9,14 +9,18 @@ messages:
   no_permission: "&cNon hai il permesso per eseguire questo comando."
   player_not_found: "&cGiocatore non trovato, non è stato possibile dare la Cassa."
   invalid_crate_type: "&cTipo di Cassa non valido."
+  invalid_key_type: "&cTipo di Chiave non valido."
   inventory_full_self: "&cIl tuo inventario è pieno."
   inventory_full_other: "&cL'inventario di {player} è pieno."
   received_crate: "&eHai ricevuto la cassa &b{crate}&e!"
+  received_key: "&eHai ricevuto la chiave &b{key}&e!"
   given_crate: "&eHai dato una cassa di tipo &b{crate} &ea &b{player}&e!"
+  given_key: "&eHai dato una chiave di tipo &b{key} &ea &b{player}&e!"
+  invalid_amount: "&cPuoi dare un massimo di 64 di questo oggetto."
 crates:
   normal:
     key:
-        name: "Chiave normale"
+        display_name: "Chiave normale"
         lore:
             - "Usa questa chiave per aprire la cassa!"
     display_name: "Cassa normale"
