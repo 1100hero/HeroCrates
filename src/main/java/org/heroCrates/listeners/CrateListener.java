@@ -3,6 +3,8 @@ package org.heroCrates.listeners;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.block.BlockState;
+import org.bukkit.block.Chest;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -40,10 +42,16 @@ public class CrateListener implements Listener {
         if (recentBlocks.contains(location)) return;
 
         recentBlocks.add(location);
-        Bukkit.getScheduler().runTaskLater(plugin, () -> recentBlocks.remove(location), 5L);
+        Bukkit.getScheduler().runTaskLater(plugin, () -> recentBlocks.remove(location), 2L);
 
         String crateType = item.getItemMeta().getPersistentDataContainer().get(CrateItem.ITEM_KEY, PersistentDataType.STRING);
         Component displayName = item.getItemMeta().displayName();
+
+        BlockState state = event.getBlockPlaced().getState();
+        if(state instanceof Chest chest) {
+            chest.getPersistentDataContainer().set(CrateItem.ITEM_KEY, PersistentDataType.STRING, crateType);
+            chest.update();
+        }
 
         plugin.getCratesManager().getCrates().add(new CrateItem(plugin, new Crate(location, crateType, displayName)));
 

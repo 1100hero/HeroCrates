@@ -56,16 +56,6 @@ public class KeyItem extends AbstractItem {
     }
 
     @Override
-    public void onRightClick() {
-
-    }
-
-    @Override
-    public void onLeftClick() {
-
-    }
-
-    @Override
     public boolean shouldCancelDrop() {
         return false;
     }

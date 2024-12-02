@@ -5,6 +5,7 @@ import org.bukkit.Material;
 
 @Getter
 public enum ItemsType {
+
     KEY(Material.TRIPWIRE_HOOK),
     CRATE(Material.CHEST);
 

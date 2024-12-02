@@ -13,10 +13,6 @@ public abstract class AbstractItem {
 
     protected abstract ItemStack getItem();
 
-    public abstract void onRightClick();
-
-    public abstract void onLeftClick();
-
     public abstract boolean shouldCancelDrop();
 
     public abstract void giveItem(Player player, int amount);

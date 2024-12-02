@@ -17,6 +17,7 @@ messages:
   given_crate: "&eHai dato una cassa di tipo &b{crate} &ea &b{player}&e!"
   given_key: "&eHai dato una chiave di tipo &b{key} &ea &b{player}&e!"
   invalid_amount: "&cPuoi dare un massimo di 64 di questo oggetto."
+  invalid_key: "&cNon hai la chiave giusta per aprire questa cassa."
 crates:
   normal:
     key:
@@ -32,18 +33,46 @@ crates:
       - "&7Clicca per aprire"
     rewards:
       - type: "ITEM"
+        item: "EMERALD_BLOCK"
+        amount: 2
+        probability: 10
+        name: "&aBlocco di Smeraldo"
+        lore:
+          - "&7Un blocco di smeraldo"
+      - type: "ITEM"
         item: "DIAMOND_BLOCK"
         amount: 5
         probability: 50
-      - type: "COMMAND"
-        command: "give %player% diamond_sword"
-        probability: 50
+        name: "&bBlocco di Diamante"
+        lore:
+          - "&7Un blocco di diamante"
+      - type: "ITEM"
+        item: "IRON_BLOCK"
+        amount: 10
+        probability: 20
+        name: "&fBlocco di Ferro"
+        lore:
+            - "&7Un blocco di ferro"
+      - type: "ITEM"
+        item: "NETHERITE_INGOT"
+        amount: 1
+        probability: 5
+        name: "&5Lingotto di Netherite"
+        lore:
+            - "&7Un lingotto di netherite"
+      - type: "ITEM"
+        item: "DIAMOND_SWORD"
+        amount: 1
+        probability: 15
+        name: "&bSpada di Diamante"
+        lore:
+            - "&7Una spada di diamante"
+    gui_title: "&cCassa {crate}"
     guaranteed_rewards:
       30:
         - type: "ITEM"
           item: "DIAMOND_BLOCK"
           amount: 10
-    animations:
+    animation:
       type: "SPIRAL"
-      color: "RED"
-      size: 2.0
+      size: 2

@@ -11,6 +11,7 @@ import org.heroCrates.HeroCrates;
 import org.heroCrates.dto.Crate;
 import org.heroCrates.items.AbstractItem;
 import org.heroCrates.utils.Utils;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.stream.Collectors;
 
@@ -44,6 +45,10 @@ public class CrateItem extends AbstractItem {
         });
     }
 
+    public void onRightClick(Player player, ItemStack item) {
+
+    }
+
     @Override
     public Component getName() {
         return plugin.getCratesManager().getDisplayName(getCrate().type());
@@ -52,16 +57,6 @@ public class CrateItem extends AbstractItem {
     @Override
     public ItemStack getItem() {
         return this.item;
-    }
-
-    @Override
-    public void onRightClick() {
-
-    }
-
-    @Override
-    public void onLeftClick() {
-
     }
 
     @Override
