@@ -9,6 +9,7 @@ import org.heroCrates.items.ItemsManager;
 import org.heroCrates.managers.CratesManager;
 import org.heroCrates.managers.HologramManager;
 import org.heroCrates.managers.KeysManager;
+import org.heroCrates.placeholders.PlaceholderAPI;
 import org.heroCrates.utils.Initializer;
 
 @Getter
@@ -37,12 +38,15 @@ public final class HeroCrates extends JavaPlugin {
         initializer.initializeCommands();
         initializer.initializeEvents();
         initializer.initializeHolograms();
+
+        new PlaceholderAPI(this).register();
     }
 
     @Override
     @SneakyThrows
     public void onDisable() {
         this.hologramManager.removeAllHolograms();
+        hikari.getConnection().close();
         if (this.getHikari().getDataSource() != null && !this.getHikari().getDataSource().isClosed()) {
             this.getHikari().getDataSource().close();
             getLogger().info("Connection closed.");

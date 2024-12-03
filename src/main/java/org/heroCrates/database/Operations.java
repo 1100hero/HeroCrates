@@ -174,4 +174,30 @@ public class Operations {
         }
         return 0;
     }
+
+    public String getPosition(String crate, int page, int row) {
+        String query = "SELECT ps.uuid, COUNT(ps.id) AS crates_opened " +
+                "FROM `player_stats` ps " +
+                "JOIN `key_data` kd ON ps.key_id = kd.id " +
+                "WHERE kd.type = ? AND ps.used = true " +
+                "GROUP BY ps.uuid " +
+                "ORDER BY crates_opened DESC " +
+                "LIMIT ?, 1";
+
+        try (Connection connection = plugin.getHikari().getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
+
+            stmt.setString(1, crate);
+            stmt.setInt(2, (page - 1) * 10 + row - 1);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return Bukkit.getOfflinePlayer(UUID.fromString(rs.getString("uuid"))).getName();
+                }
+            }
+        } catch (SQLException e) {
+            plugin.getLogger().severe("Error while getting player position for crate: " + crate);
+        }
+        return "Nessuno";
+    }
 }
