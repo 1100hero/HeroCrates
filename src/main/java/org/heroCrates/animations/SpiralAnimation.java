@@ -1,5 +1,6 @@
 package org.heroCrates.animations;
 
+import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.Player;
@@ -7,8 +8,8 @@ import org.heroCrates.HeroCrates;
 
 public class SpiralAnimation extends AbstractAnimation {
 
-    public SpiralAnimation(HeroCrates plugin, Player player, Location location, double size, String particle) {
-        super(plugin, player, location, size, particle);
+    public SpiralAnimation(HeroCrates plugin, Player player, Location location, double size, String particle, Color color) {
+        super(plugin, player, location, size, particle, color);
     }
 
     @Override
@@ -45,7 +46,12 @@ public class SpiralAnimation extends AbstractAnimation {
             double offsetX = (Math.random() - 0.5) * 0.2;
             double offsetY = (Math.random() - 0.5) * 0.2;
             double offsetZ = (Math.random() - 0.5) * 0.2;
-            player.spawnParticle(particleEnum, location.clone().add(offsetX, offsetY, offsetZ), 1);
+            if (particleEnum == Particle.DUST) {
+                Particle.DustOptions dustOptions = new Particle.DustOptions(color, 1.0F);
+                player.spawnParticle(particleEnum, location, 1, dustOptions);
+            } else {
+                player.spawnParticle(particleEnum, location, 1);
+            }
         }
         location.subtract(x, y, z);
     }

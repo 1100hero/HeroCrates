@@ -4,15 +4,15 @@ import fr.minuskube.inv.ClickableItem;
 import fr.minuskube.inv.SmartInventory;
 import fr.minuskube.inv.content.InventoryContents;
 import fr.minuskube.inv.content.InventoryProvider;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.heroCrates.HeroCrates;
 import org.heroCrates.database.Operations;
 
-public class VirtualKeySelectionGUI implements InventoryProvider  {
+public class VirtualKeySelectionGUI implements InventoryProvider {
 
     private final HeroCrates plugin;
     private final SmartInventory inventory;
@@ -28,8 +28,8 @@ public class VirtualKeySelectionGUI implements InventoryProvider  {
                 .id("selection-virtual-gui")
                 .provider(this)
                 .size(3, 9)
-                .title(plugin.getConfig().getString("crates." + this.crateType + ".gui_title")
-                        .replace("{crate}", crateType).replace("&", "§"))
+                .title(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("crates." + this.crateType + ".gui_title")
+                        .replace("{crate}", crateType)))
                 .build();
     }
 
@@ -41,6 +41,7 @@ public class VirtualKeySelectionGUI implements InventoryProvider  {
             new Operations(plugin).removeOneVirtualKey(player.getUniqueId(), crateType);
             player.closeInventory();
         }));
+
         contents.set(1, 5, ClickableItem.of(ItemStack.of(Material.RED_STAINED_GLASS_PANE), e -> {
             player.closeInventory();
         }));

@@ -73,7 +73,9 @@ crates:
     # Animation type: SPIRAL, EXPLOSION
     animation:
       type: "SPIRAL"
-      particle: "DRIPPING_HONEY"
+      # To make work particle with color particle must be set to "DUST"
+      color: "RED"
+      particle: "DUST"
       distance: 2
       sound:
         type: "ENTITY_PLAYER_LEVELUP"

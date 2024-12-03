@@ -104,13 +104,15 @@ public class CratesManager {
                     String animationType = config.getString("crates." + crateType.toLowerCase() + ".animation.type");
                     double size = config.getDouble("crates." + crateType.toLowerCase() + ".animation.distance");
                     String particle = config.getString("crates." + crateType.toLowerCase() + ".animation.particle");
+                    String color = config.getString("crates." + crateType.toLowerCase() + ".animation.color");
 
                     new Animation(plugin).playAnimation(
                             player,
                             chestLocation.add(0.5, 0.5, 0.5),
                             animationType,
                             size,
-                            particle);
+                            particle,
+                            color);
 
                     String sound = config.getString("crates." + crateType.toLowerCase() + ".animation.sound.type").toUpperCase();
                     float volume = (float) config.getDouble("crates." + crateType.toLowerCase() + ".animation.sound.volume");
@@ -133,12 +135,12 @@ public class CratesManager {
                 player.sendMessage(Utils.colorize(config.getString("messages.invalid_key")));
                 player.sendMessage(Utils.colorize(config.getString("messages.invalid_key")));
                 player.setVelocity(player.getLocation().getDirection().multiply(-0.5).setY(0.3));
-            } else if (virtualKeys > 0) {
-                new VirtualKeySelectionGUI(plugin, crateType, chestLocation).open(player);
             } else if (Utils.isCorrectKey(item, crateType)) {
                 if (!plugin.getKeysManager().startCountdown(player.getUniqueId(), crateType.toLowerCase())) return;
                 giveAward(player, crateType.toLowerCase(), chestLocation, false);
                 new Operations(plugin).insertPhysicalKey(player.getUniqueId(), crateType.toLowerCase());
+            } else if (virtualKeys > 0) {
+                new VirtualKeySelectionGUI(plugin, crateType, chestLocation).open(player);
             }
         }
     }

@@ -1,5 +1,7 @@
 package org.heroCrates.animations;
 
+import lombok.SneakyThrows;
+import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.Player;
@@ -7,8 +9,8 @@ import org.heroCrates.HeroCrates;
 
 public class ExplosionAnimation extends AbstractAnimation {
 
-    public ExplosionAnimation(HeroCrates plugin, Player player, Location location, double size, String particle) {
-        super(plugin, player, location, size, particle);
+    public ExplosionAnimation(HeroCrates plugin, Player player, Location location, double size, String particle, Color color) {
+        super(plugin, player, location, size, particle, color);
     }
 
     @Override
@@ -33,6 +35,7 @@ public class ExplosionAnimation extends AbstractAnimation {
         }
     }
 
+    @SneakyThrows
     private void spawnExplosionParticles(double radius) {
         if (particle == null || particle.isEmpty()) return;
 
@@ -44,7 +47,12 @@ public class ExplosionAnimation extends AbstractAnimation {
                 double x = radius * Math.sin(theta) * Math.cos(phi);
                 double z = radius * Math.sin(theta) * Math.sin(phi);
                 location.add(x, y, z);
-                player.spawnParticle(particleEnum, location, 1);
+                if (particleEnum == Particle.DUST) {
+                    Particle.DustOptions dustOptions = new Particle.DustOptions(color, 1.0F);
+                    player.spawnParticle(particleEnum, location, 1, dustOptions);
+                } else {
+                    player.spawnParticle(particleEnum, location, 1);
+                }
                 location.subtract(x, y, z);
             }
         }

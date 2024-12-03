@@ -4,6 +4,7 @@ import fr.minuskube.inv.ClickableItem;
 import fr.minuskube.inv.SmartInventory;
 import fr.minuskube.inv.content.InventoryContents;
 import fr.minuskube.inv.content.InventoryProvider;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -30,8 +31,8 @@ public class CratePreviewGUI implements InventoryProvider {
                 .id("crate-preview-gui")
                 .provider(this)
                 .size(6, 9)
-                .title(config.getString("crates." + this.crateType + ".gui_title")
-                        .replace("{crate}", crateType).replace("&", "§"))
+                .title(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("crates." + this.crateType + ".gui_title"))
+                        .replace("{crate}", crateType))
                 .build();
     }
 
