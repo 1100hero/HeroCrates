@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Operations {
 
@@ -151,5 +152,27 @@ public class Operations {
         } catch (SQLException e) {
             plugin.getLogger().severe("Error while removing virtual key for player: " + playerUUID + " and keyType: " + keyType);
         }
+    }
+
+    public int crateOpenedByPlayer(UUID playerUUID, String keyType) {
+        String query = "SELECT COUNT(*) AS opened_count FROM `player_stats` ps " +
+                "JOIN `key_data` kd ON ps.key_id = kd.id " +
+                "WHERE ps.uuid = ? AND ps.used = true AND kd.type = ?";
+
+        try (Connection connection = plugin.getHikari().getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
+
+            stmt.setString(1, playerUUID.toString());
+            stmt.setString(2, keyType);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("opened_count");
+                }
+            }
+        } catch (SQLException e) {
+            plugin.getLogger().severe("Error while tracking crate openings for player");
+        }
+        return 0;
     }
 }

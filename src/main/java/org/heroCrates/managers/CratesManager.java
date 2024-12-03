@@ -5,6 +5,7 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
@@ -120,6 +121,7 @@ public class CratesManager {
             }
             randomValue -= probability;
         }
+        assignGuaranteedRewards(player, crateType.toLowerCase());
     }
 
     public void handleCrateInteraction(Player player, Action action, Location chestLocation, String crateType, ItemStack item) {
@@ -137,6 +139,32 @@ public class CratesManager {
                 if (!plugin.getKeysManager().startCountdown(player.getUniqueId(), crateType.toLowerCase())) return;
                 giveAward(player, crateType.toLowerCase(), chestLocation, false);
                 new Operations(plugin).insertPhysicalKey(player.getUniqueId(), crateType.toLowerCase());
+            }
+        }
+    }
+
+    public void assignGuaranteedRewards(Player player, String crateType) {
+        int openedCrates = new Operations(plugin).crateOpenedByPlayer(player.getUniqueId(), crateType);
+
+        ConfigurationSection guaranteedRewardsSection = plugin.getConfig().getConfigurationSection("crates." + crateType + ".guaranteed_rewards");
+
+        for (String requiredCratesStr : guaranteedRewardsSection.getKeys(false)) {
+            int requiredCrates = Integer.parseInt(requiredCratesStr);
+
+            if (openedCrates > 0 && openedCrates % requiredCrates == 0) {
+                List<Map<?, ?>> rewards = guaranteedRewardsSection.getMapList(requiredCratesStr);
+                for (Map<?, ?> rewardData : rewards) {
+                    String itemName = (String) rewardData.get("item");
+                    int amount = (int) rewardData.get("amount");
+
+                    Material material = Material.getMaterial(itemName);
+                    if (material != null) {
+                        player.getInventory().addItem(new ItemStack(material, amount));
+                        player.sendMessage(Utils.colorize(plugin.getConfig().getString("messages.received_item")
+                                .replace("{item}", material.name().toLowerCase())
+                                .replace("{amount}", String.valueOf(amount))));
+                    }
+                }
             }
         }
     }

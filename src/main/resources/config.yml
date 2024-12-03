@@ -35,36 +35,31 @@ crates:
       - "&6Cassa Leggendaria"
       - "&7Clicca per aprire"
     rewards:
-      - type: "ITEM"
-        item: "EMERALD_BLOCK"
+      - item: "EMERALD_BLOCK"
         amount: 2
         probability: 10
         name: "&aBlocco di Smeraldo"
         lore:
           - "&7Un blocco di smeraldo"
-      - type: "ITEM"
-        item: "DIAMOND_BLOCK"
+      - item: "DIAMOND_BLOCK"
         amount: 5
         probability: 50
         name: "&bBlocco di Diamante"
         lore:
           - "&7Un blocco di diamante"
-      - type: "ITEM"
-        item: "IRON_BLOCK"
+      - item: "IRON_BLOCK"
         amount: 10
         probability: 20
         name: "&fBlocco di Ferro"
         lore:
             - "&7Un blocco di ferro"
-      - type: "ITEM"
-        item: "NETHERITE_INGOT"
+      - item: "NETHERITE_INGOT"
         amount: 1
         probability: 5
         name: "&5Lingotto di Netherite"
         lore:
             - "&7Un lingotto di netherite"
-      - type: "ITEM"
-        item: "DIAMOND_SWORD"
+      - item: "DIAMOND_SWORD"
         amount: 1
         probability: 15
         name: "&bSpada di Diamante"
@@ -73,8 +68,7 @@ crates:
     gui_title: "&cCassa {crate}"
     guaranteed_rewards:
       30:
-        - type: "ITEM"
-          item: "DIAMOND_BLOCK"
+        - item: "DIAMOND_BLOCK"
           amount: 10
     # Animation type: SPIRAL, EXPLOSION
     animation:

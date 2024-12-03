@@ -16,12 +16,17 @@ repositories {
         name = "sonatype"
         url = "https://oss.sonatype.org/content/groups/public/"
     }
+    maven {
+        name = "placeholderapi"
+        url = "https://repo.extendedclip.com/content/repositories/placeholderapi/"
+    }
 }
 
 dependencies {
     implementation("com.zaxxer:HikariCP:6.2.1")
     compileOnly('org.projectlombok:lombok:1.18.30')
     implementation('fr.minuskube.inv:smart-invs:1.2.7')
+    compileOnly ('me.clip:placeholderapi:2.11.6')
     annotationProcessor( 'org.projectlombok:lombok:1.18.30')
     compileOnly("io.papermc.paper:paper-api:1.21-R0.1-SNAPSHOT")
 }
