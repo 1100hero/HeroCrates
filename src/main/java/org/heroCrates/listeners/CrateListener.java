@@ -13,9 +13,9 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 import org.heroCrates.HeroCrates;
-import org.heroCrates.objects.Crate;
 import org.heroCrates.holograms.CrateHologram;
 import org.heroCrates.items.impl.CrateItem;
+import org.heroCrates.objects.Crate;
 
 import java.util.HashSet;
 import java.util.List;
@@ -48,7 +48,7 @@ public class CrateListener implements Listener {
         Component displayName = item.getItemMeta().displayName();
 
         BlockState state = event.getBlockPlaced().getState();
-        if(state instanceof Chest chest) {
+        if (state instanceof Chest chest) {
             chest.getPersistentDataContainer().set(CrateItem.ITEM_KEY, PersistentDataType.STRING, crateType);
             chest.update();
         }

@@ -1,10 +1,8 @@
 package org.heroCrates.listeners;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Sound;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Chest;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,8 +11,6 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.persistence.PersistentDataType;
 import org.heroCrates.HeroCrates;
-import org.heroCrates.animations.Animation;
-import org.heroCrates.gui.CratePreviewGUI;
 import org.heroCrates.items.AbstractItem;
 import org.heroCrates.items.impl.CrateItem;
 import org.heroCrates.utils.Utils;
@@ -25,12 +21,10 @@ import java.util.Set;
 public class ItemListener implements Listener {
 
     private final HeroCrates plugin;
-    private final FileConfiguration config;
     private final Set<Player> recentBlocks = new HashSet<>();
 
     public ItemListener(HeroCrates plugin) {
         this.plugin = plugin;
-        this.config = plugin.getConfig();
         Bukkit.getPluginManager().registerEvents(this, plugin);
     }
 
@@ -64,20 +58,9 @@ public class ItemListener implements Listener {
             return;
         }
 
-        if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
-            new CratePreviewGUI(plugin, crateType).open(player);
-        } else {
+        if (chest.getPersistentDataContainer().has(CrateItem.ITEM_KEY, PersistentDataType.STRING))
             event.setCancelled(true);
-            if (!Utils.isCorrectKey(event.getItem(), crateType)) {
-                player.sendMessage(Utils.colorize(config.getString("messages.invalid_key")));
-                player.sendMessage(Utils.colorize(config.getString("messages.invalid_key")));
-                player.setVelocity(player.getLocation().getDirection().multiply(-0.5).setY(0.3));
-                return;
-            }
 
-            if (!plugin.getKeysManager().startCountdown(player.getUniqueId(), crateType.toLowerCase())) return;
-
-            plugin.getCratesManager().giveAward(player, crateType.toLowerCase(), chest.getLocation());
-        }
+        plugin.getCratesManager().handleCrateInteraction(player, event.getAction(), chest.getLocation(), crateType, event.getItem());
     }
 }

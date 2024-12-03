@@ -3,13 +3,11 @@ package org.heroCrates;
 import fr.minuskube.inv.InventoryManager;
 import lombok.Getter;
 import lombok.SneakyThrows;
-
-import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.heroCrates.database.HikariConfiguration;
-import org.heroCrates.managers.HologramManager;
-import org.heroCrates.managers.CratesManager;
 import org.heroCrates.items.ItemsManager;
+import org.heroCrates.managers.CratesManager;
+import org.heroCrates.managers.HologramManager;
 import org.heroCrates.managers.KeysManager;
 import org.heroCrates.utils.Initializer;
 
@@ -26,7 +24,7 @@ public final class HeroCrates extends JavaPlugin {
     @Override
     @SneakyThrows
     public void onEnable() {
-        //this.hikari = new HikariConfiguration(this);
+        this.hikari = new HikariConfiguration(this);
         this.cratesManager = new CratesManager(this);
         this.keysManager = new KeysManager(this);
         this.itemsManager = new ItemsManager(this);
@@ -45,8 +43,9 @@ public final class HeroCrates extends JavaPlugin {
     @SneakyThrows
     public void onDisable() {
         this.hologramManager.removeAllHolograms();
-        if (this.hikari.getConnection() != null) {
-            hikari.getConnection().close();
+        if (this.getHikari().getDataSource() != null && !this.getHikari().getDataSource().isClosed()) {
+            this.getHikari().getDataSource().close();
+            getLogger().info("Connection closed.");
         }
     }
 }

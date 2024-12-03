@@ -17,7 +17,7 @@ messages:
   given_crate: "&eHai dato una cassa di tipo &b{crate} &ea &b{player}&e!"
   given_key: "&eHai dato una chiave di tipo &b{key} &ea &b{player}&e!"
   invalid_amount: "&cPuoi dare un massimo di 64 di questo oggetto."
-  invalid_key: "&cNon hai la chiave giusta per aprire questa cassa."
+  invalid_key: "&cNon hai la chiave giusta per aprire questa cassa o non hai abbastanza chiavi virtuali."
   countdown_error: "&cDevi aspettare altri &b{time} &csecondi prima di aprire un'altra cassa."
   received_item: "&eHai ricevuto &bx{amount} {item}&e!"
 crates:

@@ -12,6 +12,7 @@ import org.bukkit.persistence.PersistentDataType;
 import org.heroCrates.HeroCrates;
 import org.heroCrates.commands.GiveCratesCommand;
 import org.heroCrates.commands.GiveKeyCommand;
+import org.heroCrates.commands.GiveVirtualKeyCommand;
 import org.heroCrates.objects.Crate;
 import org.heroCrates.holograms.CrateHologram;
 import org.heroCrates.items.impl.CrateItem;
@@ -31,6 +32,7 @@ public class Initializer {
     public void initializeCommands() {
         new GiveCratesCommand(plugin);
         new GiveKeyCommand(plugin);
+        new GiveVirtualKeyCommand(plugin);
     }
 
     public void initializeEvents() {

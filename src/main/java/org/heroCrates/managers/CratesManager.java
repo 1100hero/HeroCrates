@@ -7,10 +7,14 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.event.block.Action;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 import org.heroCrates.HeroCrates;
 import org.heroCrates.animations.Animation;
+import org.heroCrates.database.Operations;
+import org.heroCrates.gui.CratePreviewGUI;
+import org.heroCrates.gui.VirtualKeySelectionGUI;
 import org.heroCrates.items.AbstractItem;
 import org.heroCrates.items.impl.CrateItem;
 import org.heroCrates.utils.Utils;
@@ -64,8 +68,8 @@ public class CratesManager {
                 .anyMatch(crateItem -> crateItem.getCrate().type().equalsIgnoreCase(type));
     }
 
-    public void giveAward(Player player, String crateType, Location chestLocation) {
-        Utils.removePhysicalKey(player);
+    public void giveAward(Player player, String crateType, Location chestLocation, boolean isVirtual) {
+        if (!isVirtual) Utils.removePhysicalKey(player);
 
         List<Map<?, ?>> rewards = config.getMapList("crates." + crateType + ".rewards");
         double totalProbability = rewards.stream()
@@ -115,6 +119,25 @@ public class CratesManager {
                 break;
             }
             randomValue -= probability;
+        }
+    }
+
+    public void handleCrateInteraction(Player player, Action action, Location chestLocation, String crateType, ItemStack item) {
+        if (action == Action.LEFT_CLICK_BLOCK) {
+            new CratePreviewGUI(plugin, crateType).open(player);
+        } else {
+            int virtualKeys = new Operations(plugin).countUnusedVirtualKeys(player.getUniqueId(), crateType);
+            if (!Utils.isCorrectKey(item, crateType) && virtualKeys <= 0) {
+                player.sendMessage(Utils.colorize(config.getString("messages.invalid_key")));
+                player.sendMessage(Utils.colorize(config.getString("messages.invalid_key")));
+                player.setVelocity(player.getLocation().getDirection().multiply(-0.5).setY(0.3));
+            } else if (virtualKeys > 0) {
+                new VirtualKeySelectionGUI(plugin, crateType, chestLocation).open(player);
+            } else if (Utils.isCorrectKey(item, crateType)) {
+                if (!plugin.getKeysManager().startCountdown(player.getUniqueId(), crateType.toLowerCase())) return;
+                giveAward(player, crateType.toLowerCase(), chestLocation, false);
+                new Operations(plugin).insertPhysicalKey(player.getUniqueId(), crateType.toLowerCase());
+            }
         }
     }
 }

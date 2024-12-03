@@ -31,7 +31,7 @@ public class HikariConfiguration {
         hikariConfig.setJdbcUrl("jdbc:mysql://" + config.getString("database.host") + ":" + config.getInt("database.port") + "/" + config.getString("database.database"));
         hikariConfig.setUsername(config.getString("database.username"));
         hikariConfig.setPassword(config.getString("database.password"));
-
+        hikariConfig.setMaxLifetime(600000);
         this.dataSource = new HikariDataSource(hikariConfig);
     }
 

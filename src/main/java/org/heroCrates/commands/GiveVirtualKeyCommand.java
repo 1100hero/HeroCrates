@@ -1,14 +1,12 @@
 package org.heroCrates.commands;
 
-import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.command.*;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.util.StringUtil;
 import org.heroCrates.HeroCrates;
-import org.heroCrates.objects.Key;
-import org.heroCrates.items.impl.KeyItem;
+import org.heroCrates.database.Operations;
 import org.heroCrates.utils.Utils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -17,13 +15,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class GiveKeyCommand implements CommandExecutor, TabExecutor {
+public class GiveVirtualKeyCommand implements TabExecutor, CommandExecutor {
 
     private final FileConfiguration config;
     private final HeroCrates plugin;
 
-    public GiveKeyCommand(HeroCrates plugin) {
-        PluginCommand command = plugin.getCommand("givekey");
+    public GiveVirtualKeyCommand(HeroCrates plugin) {
+        PluginCommand command = plugin.getCommand("givevirtualkey");
         Objects.requireNonNull(command).setTabCompleter(this);
         command.setExecutor(this);
         this.plugin = plugin;
@@ -37,7 +35,7 @@ public class GiveKeyCommand implements CommandExecutor, TabExecutor {
             return true;
         }
 
-        if (!player.hasPermission("herocrates.givekey")) {
+        if (!player.hasPermission("herocrates.givevirtualkey")) {
             player.sendMessage(Utils.colorize(config.getString("messages.no_permission")));
             return true;
         }
@@ -50,15 +48,6 @@ public class GiveKeyCommand implements CommandExecutor, TabExecutor {
 
         if (!plugin.getCratesManager().isCrateName(args[1])) {
             player.sendMessage(Utils.colorize(config.getString("messages.invalid_key_type")));
-            return true;
-        }
-
-        if (target.getInventory().firstEmpty() == -1) {
-            if (player == target) {
-                player.sendMessage(Utils.colorize(config.getString("messages.inventory_full_self")));
-            } else {
-                player.sendMessage(Utils.colorize(config.getString("messages.inventory_full_other").replace("{player}", target.getName())));
-            }
             return true;
         }
 
@@ -83,8 +72,7 @@ public class GiveKeyCommand implements CommandExecutor, TabExecutor {
             }
         }
 
-        Component displayName = Utils.colorize(plugin.getConfig().getString("crates." + args[1].toLowerCase() + ".key.display_name"));
-        new KeyItem(plugin, new Key(args[1], displayName)).giveItem(target, amount);
+        new Operations(plugin).insertVirtualKey(target.getUniqueId(), args[1], amount);
         return true;
     }
 
@@ -104,4 +92,5 @@ public class GiveKeyCommand implements CommandExecutor, TabExecutor {
         }
         return StringUtil.copyPartialMatches(args[args.length - 1], completions, new ArrayList<>());
     }
+
 }

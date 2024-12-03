@@ -12,3 +12,7 @@ commands:
     description: 'Dai delle chiavi ad un giocatore'
     usage: '/givekey <nome> <tipo> <quantità>'
     permission: herocrates.givekey
+  givevirtualkey:
+    description: 'Dai delle chiavi virtuali ad un giocatore'
+    usage: '/givevirtualkey <nome> <tipo> <quantità>'
+    permission: herocrates.givevirtualkey
