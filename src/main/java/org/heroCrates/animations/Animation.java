@@ -20,6 +20,45 @@ public class Animation {
             case "SPIRAL":
                 playSpiralAnimation(player, location, size, particle);
                 break;
+            case "EXPLOSION":
+                playExplosionAnimation(player, location, size, particle);
+                break;
+        }
+    }
+
+    private void playExplosionAnimation(Player player, Location location, double size, String particle) {
+        new BukkitRunnable() {
+            double t = 0;
+            final double maxRadius = size;
+
+            @Override
+            public void run() {
+                t += 0.3;
+                double radius = t * maxRadius;
+
+                spawnExplosionParticles(player, location, radius, particle);
+
+                if (radius > maxRadius) {
+                    this.cancel();
+                }
+            }
+        }.runTaskTimer(plugin, 0, 1);
+    }
+
+    private void spawnExplosionParticles(Player player, Location location, double radius, String particle) {
+        if (particle == null || particle.isEmpty()) return;
+
+        Particle particleEnum = Particle.valueOf(particle.toUpperCase());
+
+        for (double theta = 0; theta < Math.PI; theta += Math.PI / 10) {
+            double y = radius * Math.cos(theta);
+            for (double phi = 0; phi < 2 * Math.PI; phi += Math.PI / 10) {
+                double x = radius * Math.sin(theta) * Math.cos(phi);
+                double z = radius * Math.sin(theta) * Math.sin(phi);
+                location.add(x, y, z);
+                player.spawnParticle(particleEnum, location, 1);
+                location.subtract(x, y, z);
+            }
         }
     }
 

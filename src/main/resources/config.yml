@@ -73,6 +73,7 @@ crates:
         - type: "ITEM"
           item: "DIAMOND_BLOCK"
           amount: 10
+    # Animation type: SPIRAL, EXPLOSION
     animation:
       type: "SPIRAL"
       particle: "DRIPPING_HONEY"
