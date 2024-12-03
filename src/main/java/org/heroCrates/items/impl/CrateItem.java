@@ -8,10 +8,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 import org.heroCrates.HeroCrates;
-import org.heroCrates.dto.Crate;
+import org.heroCrates.objects.Crate;
 import org.heroCrates.items.AbstractItem;
 import org.heroCrates.utils.Utils;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.stream.Collectors;
 

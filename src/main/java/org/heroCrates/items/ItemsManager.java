@@ -2,7 +2,7 @@ package org.heroCrates.items;
 
 import org.bukkit.Material;
 import org.heroCrates.HeroCrates;
-import org.heroCrates.dto.Crate;
+import org.heroCrates.objects.Crate;
 import org.heroCrates.enums.ItemsType;
 import org.heroCrates.items.impl.CrateItem;
 import org.heroCrates.utils.Utils;

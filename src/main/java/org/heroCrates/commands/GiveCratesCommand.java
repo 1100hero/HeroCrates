@@ -7,7 +7,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.util.StringUtil;
 import org.heroCrates.HeroCrates;
-import org.heroCrates.dto.Crate;
+import org.heroCrates.objects.Crate;
 import org.heroCrates.items.impl.CrateItem;
 import org.heroCrates.utils.Utils;
 import org.jetbrains.annotations.NotNull;

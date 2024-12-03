@@ -4,11 +4,13 @@ import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 import org.heroCrates.HeroCrates;
-import org.heroCrates.dto.Crate;
+import org.heroCrates.animations.Animation;
 import org.heroCrates.items.AbstractItem;
 import org.heroCrates.items.impl.CrateItem;
 import org.heroCrates.utils.Utils;
@@ -22,9 +24,11 @@ public class CratesManager {
 
     private final List<CrateItem> crates;
     private final HeroCrates plugin;
+    private final FileConfiguration config;
 
     public CratesManager(HeroCrates plugin) {
         this.plugin = plugin;
+        this.config = plugin.getConfig();
         crates = new ArrayList<>();
     }
 
@@ -60,10 +64,10 @@ public class CratesManager {
                 .anyMatch(crateItem -> crateItem.getCrate().type().equalsIgnoreCase(type));
     }
 
-    public void giveAward(Player player, String crateType) {
+    public void giveAward(Player player, String crateType, Location chestLocation) {
         Utils.removePhysicalKey(player);
 
-        List<Map<?, ?>> rewards = plugin.getConfig().getMapList("crates." + crateType + ".rewards");
+        List<Map<?, ?>> rewards = config.getMapList("crates." + crateType + ".rewards");
         double totalProbability = rewards.stream()
                 .mapToDouble(reward -> {
                     Object probabilityObj = reward.get("probability");
@@ -72,7 +76,6 @@ public class CratesManager {
                     } else if (probabilityObj instanceof Double) {
                         return (Double) probabilityObj;
                     } else {
-                        plugin.getLogger().warning("Invalid probability type: " + probabilityObj.getClass().getName());
                         return 0.0;
                     }
                 })
@@ -89,6 +92,25 @@ public class CratesManager {
                 Material material = Material.getMaterial((String) rewardData.get("item"));
                 if (material != null) {
                     player.getInventory().addItem(new ItemStack(material, (int) rewardData.get("amount")));
+                    player.sendMessage(Utils.colorize(config.getString("messages.received_item")
+                            .replace("{item}", material.name().toLowerCase())
+                            .replace("{amount}", String.valueOf(rewardData.get("amount")))));
+
+                    String animationType = config.getString("crates." + crateType.toLowerCase() + ".animation.type");
+                    double size = config.getDouble("crates." + crateType.toLowerCase() + ".animation.distance");
+                    String particle = config.getString("crates." + crateType.toLowerCase() + ".animation.particle");
+
+                    new Animation(plugin).playAnimation(
+                            player,
+                            chestLocation.add(0.5, 0.5, 0.5),
+                            animationType,
+                            size,
+                            particle);
+
+                    String sound = config.getString("crates." + crateType.toLowerCase() + ".animation.sound.type").toUpperCase();
+                    float volume = (float) config.getDouble("crates." + crateType.toLowerCase() + ".animation.sound.volume");
+                    float pitch = (float) config.getDouble("crates." + crateType.toLowerCase() + ".animation.sound.pitch");
+                    player.playSound(player.getLocation(), Sound.valueOf(sound), volume, pitch);
                 }
                 break;
             }

@@ -1,4 +1,4 @@
-package org.heroCrates.dto;
+package org.heroCrates.objects;
 
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;

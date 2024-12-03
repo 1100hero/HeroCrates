@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 import org.heroCrates.HeroCrates;
-import org.heroCrates.dto.Key;
+import org.heroCrates.objects.Key;
 import org.heroCrates.items.AbstractItem;
 import org.heroCrates.utils.Utils;
 

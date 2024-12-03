@@ -13,7 +13,7 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 import org.heroCrates.HeroCrates;
-import org.heroCrates.dto.Crate;
+import org.heroCrates.objects.Crate;
 import org.heroCrates.holograms.CrateHologram;
 import org.heroCrates.items.impl.CrateItem;
 

@@ -1,6 +1,7 @@
 package org.heroCrates.listeners;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Chest;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -74,18 +75,9 @@ public class ItemListener implements Listener {
                 return;
             }
 
-            String animationType = config.getString("crates." + crateType.toLowerCase() + ".animation.type");
-            double size = config.getDouble("crates." + crateType.toLowerCase() + ".animation.distance");
-            String particle = config.getString("crates." + crateType.toLowerCase() + ".animation.particle");
+            if (!plugin.getKeysManager().startCountdown(player.getUniqueId(), crateType.toLowerCase())) return;
 
-            new Animation(plugin).playAnimation(
-                    player,
-                    chest.getLocation().add(0.5, 0.5, 0.5),
-                    animationType,
-                    size,
-                    particle);
-
-            plugin.getCratesManager().giveAward(player, crateType.toLowerCase());
+            plugin.getCratesManager().giveAward(player, crateType.toLowerCase(), chest.getLocation());
         }
     }
 }

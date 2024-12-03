@@ -1,8 +1,8 @@
 database:
-  host: "localhost"
+  host: ""
   port: 3306
-  database: "herocrates"
-  username: "root"
+  database: ""
+  username: ""
   password: ""
 messages:
   only_players: "&cSolo i giocatori possono eseguire questo comando."
@@ -18,8 +18,11 @@ messages:
   given_key: "&eHai dato una chiave di tipo &b{key} &ea &b{player}&e!"
   invalid_amount: "&cPuoi dare un massimo di 64 di questo oggetto."
   invalid_key: "&cNon hai la chiave giusta per aprire questa cassa."
+  countdown_error: "&cDevi aspettare altri &b{time} &csecondi prima di aprire un'altra cassa."
+  received_item: "&eHai ricevuto &bx{amount} {item}&e!"
 crates:
   normal:
+    countdown: 5
     key:
         display_name: "Chiave normale"
         lore:
@@ -78,3 +81,7 @@ crates:
       type: "SPIRAL"
       particle: "DRIPPING_HONEY"
       distance: 2
+      sound:
+        type: "ENTITY_PLAYER_LEVELUP"
+        volume: 3.0
+        pitch: 2.0
